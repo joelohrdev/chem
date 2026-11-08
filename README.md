@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CHM 2410 Exam 3 practice
 
-## Getting Started
-
-First, run the development server:
+A quiz app built from `CHM2410 Practice Exam 3 FA 25.pdf`. Every question has an explanation, and questions don't repeat until you've answered them all. Progress is saved in the browser.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `lib/quiz/content/`: hand-written questions, including the exam's own. Append new ones to the end of a list so existing ids stay stable.
+- `lib/quiz/generators/`: questions computed from data tables of pKa values, bond energies and phase-change temperatures. Ids and content are seeded, so they're the same on every visit.
+- `lib/quiz/deck.ts`: picks a session's questions and prevents repeats.
+- `components/`: the interface, including the structure, energy diagram and curved-arrow drawings.
 
-## Learn More
+## Checks
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The tests check the whole bank: unique ids, valid answers, distinct options, parsable structures, and that each drawn conjugate acid or base differs from its parent by exactly one H⁺.
